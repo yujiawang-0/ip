@@ -1,0 +1,11 @@
+list
+todo borrow book
+deadline return book /by february
+event CS2109S lecture /from 4pm /to 6pm
+todo read book
+list
+mark 4
+mark 3
+unmark 3
+list
+bye
