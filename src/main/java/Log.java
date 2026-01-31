@@ -8,6 +8,10 @@ public class Log {
         log.add(task);
     }
 
+    public void delete(int index) {
+        log.remove(index);
+    }
+
     public ToDo get(int index) throws PrimeException {
         if (index < 0 || index >= log.size()) {
             throw new PrimeException("I'm sorry, but that task does not exist.");
@@ -21,12 +25,6 @@ public class Log {
 
     public ArrayList<ToDo> getAll() {
         return log;
-    }
-
-    // returns the number of tasks in the log
-    public void printLogSize() {
-        String size = String.valueOf(log.size());
-        System.out.println("You have " + size + " tasks. Let's keep at it!");
     }
 
 }

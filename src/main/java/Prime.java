@@ -1,6 +1,4 @@
 import java.util.Scanner;
-import java.util.ArrayList;
-
 
 public class Prime {
     private static final Log log = new Log();

@@ -38,34 +38,53 @@ public class PrimeParser {
                 
     }
 
-        // adds Todo to log and repeats what has been added
+    // adds Todo to log and repeats what has been added
     public static void addTodo(String item, Log log) {
         ToDo todo = new ToDo(false, item);
         log.add(todo);
-        System.out.println("Understood. I have added to the log:");
-        System.out.println("    " + todo.printTask());
+        Ui.showMessage("Understood. I have added to the log:");
+        Ui.showMessage("    " + todo.printTask());
     }
 
     // adds Event to log and repeats what has been added
     public static void addDeadline(String item, String dueDate, Log log) {
         Deadline deadline = new Deadline(false, item, dueDate);
         log.add(deadline);
-        System.out.println("Understood. I have added to the log:");
-        System.out.println("    " + deadline.printTask());
+        Ui.showMessage("Understood. I have added to the log:");
+        Ui.showMessage("    " + deadline.printTask());
     }
 
     // adds Deadline to log and repeats what has been added
     public static void addEvent(String item, String start, String end, Log log) {
         Event event = new Event(false, item, start, end);
         log.add(event);
-        System.out.println("Understood. I have added to the log:");
-        System.out.println("    " + event.printTask());
+        Ui.showMessage("Understood. I have added to the log:");
+        Ui.showMessage("    " + event.printTask());
+    }
+
+    // delete Todo from the log and repeats what was deleted
+    public static void delete(String rest, Log log) throws PrimeException {
+        if (rest.isEmpty()) {
+            throw new PrimeException("!! : Please tell me which task to delete.");
+        }
+        
+        try {
+            int index = Integer.parseInt(rest) - 1;
+            ToDo task = log.get(index);
+            log.delete(index);
+            
+            Ui.showMessage("Understood, this task has been deleted from the log:");
+            Ui.showMessage("    " + task.printTask());
+
+        } catch (NumberFormatException e) {
+            throw new PrimeException("!! : Task number should be a number.");
+        }
+                
     }
     
     public static boolean parse(String input, Log log) throws PrimeException {
         if (input.isEmpty()) {
-            Ui.showMessage("!! : Hmm.. you didn't say anything...");
-            return true;
+            throw new PrimeException("!! : Hmm.. you didn't say anything...");
         }
 
         String[] parts = input.split("\\s+", 2);
@@ -86,7 +105,7 @@ public class PrimeParser {
 
         case "list":
             // prints out list of current tasks
-            log.printLogSize();
+            Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             Ui.showMessage("Here are your tasks currently in my log:");
             int i = 1;
             for (ToDo task : log.getAll()) {
@@ -102,6 +121,11 @@ public class PrimeParser {
         case "unmark":
             unmark(rest, log);
             return true;
+
+        case "delete":
+            delete(rest, log);
+            Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
+            return true;
         
         case "todo":
             // input is a todo
@@ -111,7 +135,7 @@ public class PrimeParser {
                 //Ui.showLine();
             } 
             addTodo(rest, log);
-            log.printLogSize();
+            Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
 
         case "deadline":
@@ -125,7 +149,7 @@ public class PrimeParser {
                 throw new PrimeException("!! : Please provide me with the task description and the due date.");
             }
             addDeadline(dueStrings[0], dueStrings[1], log);
-            log.printLogSize();
+            Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
 
         case "event":
@@ -146,7 +170,7 @@ public class PrimeParser {
             }
             addEvent(timingsArray[0].trim(), dates[0], dates[1], log);
             
-            log.printLogSize();
+            Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
 
         default: 
