@@ -30,5 +30,11 @@ public class Event extends ToDo {
         String symbol = this.getDone() ? "X" : " ";
         return "["+ Type + "]" + "[" + symbol + "] " + getTask() + " (From: " + getStart() + "To: "+ getEnd() + ")";
     }
+
+    @Override
+    public String toFileString() {
+        String symbol = this.getDone() ? "1" : "0";
+        return Type + " | " + symbol + " | " + getTask() + " | " + getStart() +  " | " + getEnd() ;
+    }
 }
 

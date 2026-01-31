@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 public class PrimeParser {
     
     public static void mark(String rest, Log log) throws PrimeException {
@@ -99,6 +101,7 @@ public class PrimeParser {
             return true;
 
         case "bye":
+        case "goodbye":
             // stop the commands when "bye" is inputted
             Ui.showGoodbye();
             return false;
@@ -123,6 +126,7 @@ public class PrimeParser {
             return true;
 
         case "delete":
+        case "remove":
             delete(rest, log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;

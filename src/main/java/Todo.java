@@ -33,4 +33,9 @@ public class ToDo {
         return "["+ Type + "]" + "[" + symbol + "] " + getTask();
     }
 
+    public String toFileString() {
+        String symbol = this.getDone() ? "1" : "0";
+        return Type + " | " + symbol + " | " + getTask();
+    }
+
 }

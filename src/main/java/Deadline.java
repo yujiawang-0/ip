@@ -19,5 +19,12 @@ public class Deadline extends ToDo {
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
         return "["+ Type + "]" + "[" + symbol + "] " + getTask() + "(By: " + getDue() + ")";
+        
+    }
+
+    @Override
+    public String toFileString() {
+        String symbol = this.getDone() ? "1" : "0";
+        return Type + " | " + symbol + " | " + getTask() + " | " + getDue();
     }
 }
