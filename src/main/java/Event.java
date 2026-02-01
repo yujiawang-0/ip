@@ -1,40 +1,54 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+
 public class Event extends ToDo {
     private String Type = "E";
-    private String startTime;
-    private String endTime;
+    private LocalDate startTime;
+    private LocalDate endTime;
 
-    public Event(boolean isDone, String Task, String startTime, String endTime) {
+    public Event(boolean isDone, String Task, LocalDate startTime, LocalDate endTime) {
         super(isDone, Task); 
         setStart(startTime);
         setEnd(endTime);
     }
 
-    public String getStart() {
+    public LocalDate getStart() {
         return this.startTime;
     }
 
-    public String getEnd() {
+    public LocalDate getEnd() {
         return this.endTime;
     }
 
-    public void setStart(String start) {
+    public void setStart(LocalDate start) {
         this.startTime = start;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(LocalDate end) {
         this.endTime = end;
+    }
+
+    private String getStartString() {
+        return this.getStart().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
+    }
+
+    private String getEndString() {
+        return this.getEnd().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
     @Override
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "["+ Type + "]" + "[" + symbol + "] " + getTask() + " (From: " + getStart() + "To: "+ getEnd() + ")";
+        return "["+ Type + "]" + "[" + symbol + "] " + getTask() + " (From: " 
+                + getStartString() + " To: "+ getEndString() + ")";
     }
 
     @Override
     public String toFileString() {
         String symbol = this.getDone() ? "1" : "0";
-        return Type + " | " + symbol + " | " + getTask() + " | " + getStart() +  " | " + getEnd() ;
+        return Type + " | " + symbol + " | " + getTask() + " | " 
+                + getStart() +  " | " + getEnd() ;
     }
 }
 
