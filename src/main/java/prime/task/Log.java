@@ -7,8 +7,7 @@ import prime.core.PrimeException;
 /**
  * Stores and manages the list of tasks in Prime.
  * 
- * The log keeps track of all task types, including todos,
- * deadlines, and events.
+ * The log keeps track of all task types, including todos, deadlines, and events.
  */
 public class Log {
     private ArrayList<ToDo> log = new ArrayList<>();

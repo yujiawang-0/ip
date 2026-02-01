@@ -158,25 +158,6 @@ public class PrimeParser {
         }
 
     }
-    
-          public static void find(String rest, Log log) throws PrimeException {
-        if (rest.isEmpty()) {
-            throw new PrimeException("!! : Please give me a word to search for.");
-        }
-
-        try {
-            int index = Integer.parseInt(rest) - 1;
-            ToDo task = log.get(index);
-            task.setDone(true);
-
-            Ui.showMessage("Great job on completing your task! I have marked it as done.");
-            Ui.showMessage("    " + task.printTask());
-
-        } catch (NumberFormatException e) {
-            throw new PrimeException("! : There should be a number after the 'mark' instruction.");
-        }
-
-    }
 
     /**
      * parses a user input and executes it
@@ -184,7 +165,7 @@ public class PrimeParser {
      * @param input string input by the user
      * @param log   the log to operate on
      * @return  false if user input is "bye" or "goodbye", true otherwise. signals if the program should continue running
-     *@throws PrimeException   if the command is invalid     */
+     * @throws PrimeException   if the command is invalid
      */
     public static boolean parse(String input, Log log) throws PrimeException {
         input = input.trim(); // Prime.java already trims, but parser should also do its own trimming
