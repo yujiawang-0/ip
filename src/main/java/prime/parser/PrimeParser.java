@@ -1,11 +1,13 @@
 package prime.parser;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import prime.core.PrimeException;
 import prime.task.Deadline;
 import prime.task.Event;
 import prime.task.Log;
+import prime.task.NumberedTask;
 import prime.task.ToDo;
 import prime.ui.Ui;
 
@@ -107,6 +109,25 @@ public class PrimeParser {
         }
                 
     }
+
+    public static void find(String rest, Log log) throws PrimeException {
+        if (rest.isEmpty()) {
+            throw new PrimeException("!! : Please give me a word to search for.");
+        }
+
+        try {
+            int index = Integer.parseInt(rest) - 1;
+            ToDo task = log.get(index);
+            task.setDone(true);
+
+            Ui.showMessage("Great job on completing your task! I have marked it as done.");
+            Ui.showMessage("    " + task.printTask());
+
+        } catch (NumberFormatException e) {
+            throw new PrimeException("! : There should be a number after the 'mark' instruction.");
+        }
+
+    }
     
     public static boolean parse(String input, Log log) throws PrimeException {
         input = input.trim(); // Prime.java already trims, but parser should also do its own trimming
@@ -135,11 +156,7 @@ public class PrimeParser {
             // prints out list of current tasks
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             Ui.showMessage("Here are your tasks currently in my log:");
-            int i = 1;
-            for (ToDo task : log.getAll()) {
-                System.out.println(i + ". " + task.printTask());
-                i++;
-            }
+            Ui.printArrayList(log.getAll());
             return true;
         
         case "mark":
@@ -148,6 +165,14 @@ public class PrimeParser {
 
         case "unmark":
             unmark(rest, log);
+            return true;
+
+        case "find":
+            if (rest.isEmpty()) {
+                throw new PrimeException("!! : Please provide me a search keyword...");
+            }
+            ArrayList<NumberedTask> result = log.find(rest);
+            Ui.showFindResults(result);
             return true;
 
         case "delete":
@@ -161,8 +186,8 @@ public class PrimeParser {
             // todos need task descriptions
             if (rest.isEmpty()) {
                 throw new PrimeException("!! : Please provide me a description of your task.");
-                //Ui.showLine();
             } 
+
             addTodo(rest, log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;

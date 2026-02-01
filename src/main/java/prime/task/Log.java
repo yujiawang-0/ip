@@ -1,9 +1,10 @@
 package prime.task;
-// keeps tracks of the tasks (todos, events, deadlines) in the log
+
 import java.util.ArrayList;
 
 import prime.core.PrimeException;
 
+// keeps tracks of the tasks (todos, events, deadlines) in the log
 public class Log {
     private ArrayList<ToDo> log = new ArrayList<>();
     
@@ -31,6 +32,20 @@ public class Log {
 
     public ArrayList<ToDo> getAll() {
         return log;
+    }
+
+    public ArrayList<NumberedTask> find(String keyword) {
+        ArrayList<NumberedTask> results = new ArrayList<>();
+        String lowercase = keyword.toLowerCase();
+        
+        for (int i = 0; i < log.size(); i++) {
+            ToDo task = log.get(i);
+            if (task.getTask().toLowerCase().contains(lowercase)) {
+                results.add(new NumberedTask(i, task));
+            }
+        }
+        
+        return results;
     }
 
 }
