@@ -60,18 +60,18 @@ public class Storage {
             boolean isDone = parts[1].equals("1");
 
             switch (parts[0]) {
-                case "T":
-                    return new ToDo(isDone, parts[2]);
+            case "T":
+                return new ToDo(isDone, parts[2]);
 
-                case "D":
-                    return new Deadline(isDone, parts[2].trim(), LocalDate.parse(parts[3].trim()));
+            case "D":
+                return new Deadline(isDone, parts[2].trim(), LocalDate.parse(parts[3].trim()));
 
-                case "E":
-                    return new Event(isDone, parts[2], LocalDate.parse(parts[3].trim()),
-                            LocalDate.parse(parts[4].trim()));
+            case "E":
+                return new Event(isDone, parts[2], LocalDate.parse(parts[3].trim()),
+                        LocalDate.parse(parts[4].trim()));
 
-                default:
-                    throw new PrimeException("There seems to be a corrupted data file...");
+            default:
+                throw new PrimeException("There seems to be a corrupted data file...");
             }
         } catch (Exception e) {
             throw new PrimeException("There seems to be a corrupted data file...");
