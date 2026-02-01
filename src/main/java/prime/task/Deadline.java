@@ -1,4 +1,5 @@
 package prime.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -7,7 +8,7 @@ public class Deadline extends ToDo {
     private LocalDate due;
 
     public Deadline(boolean isDone, String Task, LocalDate due) {
-        super(isDone, Task); 
+        super(isDone, Task);
         setDue(due);
     }
 
@@ -26,8 +27,8 @@ public class Deadline extends ToDo {
     @Override
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "["+ Type + "]" + "[" + symbol + "] " + getTask() + " (By: " + getDueString() + ")";
-        
+        return "[" + Type + "]" + "[" + symbol + "] " + getTask() + " (By: " + getDueString() + ")";
+
     }
 
     @Override

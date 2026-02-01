@@ -4,7 +4,7 @@ public class ToDo {
     private String Type = "T";
     private boolean isDone = false;
     private String Task;
-    
+
     public ToDo(boolean isDone, String Task) {
         setDone(isDone);
         setTask(Task);
@@ -32,7 +32,7 @@ public class ToDo {
 
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "["+ Type + "]" + "[" + symbol + "] " + getTask();
+        return "[" + Type + "]" + "[" + symbol + "] " + getTask();
     }
 
     public String toFileString() {

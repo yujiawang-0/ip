@@ -10,12 +10,12 @@ import prime.task.ToDo;
 import prime.ui.Ui;
 
 public class PrimeParser {
-    
+
     public static void mark(String rest, Log log) throws PrimeException {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to mark.");
         }
-        
+
         try {
             int index = Integer.parseInt(rest) - 1;
             ToDo task = log.get(index);
@@ -23,69 +23,73 @@ public class PrimeParser {
 
             Ui.showMessage("Great job on completing your task! I have marked it as done.");
             Ui.showMessage("    " + task.printTask());
-
         } catch (NumberFormatException e) {
             throw new PrimeException("! : There should be a number after the 'mark' instruction.");
         }
-                
+
     }
 
     public static void unmark(String rest, Log log) throws PrimeException {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to unmark.");
         }
-        
+
         try {
             int index = Integer.parseInt(rest) - 1;
             ToDo task = log.get(index);
             task.setDone(false);
-            
+
             Ui.showMessage("Alright, I'll mark it as not done.");
             Ui.showMessage("    " + task.printTask());
 
         } catch (NumberFormatException e) {
             throw new PrimeException("!! : Task number should be a number.");
         }
-                
+
     }
 
     // adds Todo to log and repeats what has been added
     public static void addTodo(String item, Log log) {
         ToDo todo = new ToDo(false, item);
         log.add(todo);
+
         Ui.showMessage("Understood. I have added to the log:");
         Ui.showMessage("    " + todo.printTask());
     }
 
     // adds Event to log and repeats what has been added
-    public static void addDeadline(String item, String dueDate, Log log) throws PrimeException{
+    public static void addDeadline(String item, String dueDate, Log log) throws PrimeException {
         try {
             LocalDate by = LocalDate.parse(dueDate.trim());
             Deadline deadline = new Deadline(false, item, by);
+
             log.add(deadline);
+
             Ui.showMessage("Understood. I have added to the log:");
             Ui.showMessage("    " + deadline.printTask());
 
         } catch (Exception e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
-        
+
     }
 
     // adds Deadline to log and repeats what has been added
-    public static void addEvent(String item, String start, String end, Log log) throws PrimeException{
+    public static void addEvent(String item, String start, String end, Log log) throws PrimeException {
         try {
             LocalDate from = LocalDate.parse(start.trim());
             LocalDate to = LocalDate.parse(end.trim());
+
             Event event = new Event(false, item, from, to);
             log.add(event);
+
             Ui.showMessage("Understood. I have added to the log:");
             Ui.showMessage("    " + event.printTask());
 
         } catch (Exception e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
-        
+
     }
 
     // delete Todo from the log and repeats what was deleted
@@ -93,21 +97,21 @@ public class PrimeParser {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to delete.");
         }
-        
+
         try {
             int index = Integer.parseInt(rest) - 1;
             ToDo task = log.get(index);
             log.delete(index);
-            
+
             Ui.showMessage("Understood, this task has been deleted from the log:");
             Ui.showMessage("    " + task.printTask());
 
         } catch (NumberFormatException e) {
             throw new PrimeException("!! : Task number should be a number.");
         }
-                
+
     }
-    
+
     public static boolean parse(String input, Log log) throws PrimeException {
         input = input.trim(); // Prime.java already trims, but parser should also do its own trimming
         if (input.isEmpty()) {
@@ -119,7 +123,6 @@ public class PrimeParser {
         String rest = parts.length > 1 ? parts[1] : "";
 
         switch (command) {
-        
         case "hello":
             // says hello again
             Ui.showHelloTwo();
@@ -135,13 +138,15 @@ public class PrimeParser {
             // prints out list of current tasks
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             Ui.showMessage("Here are your tasks currently in my log:");
+
             int i = 1;
             for (ToDo task : log.getAll()) {
                 System.out.println(i + ". " + task.printTask());
                 i++;
             }
+
             return true;
-        
+
         case "mark":
             mark(rest, log);
             return true;
@@ -155,28 +160,32 @@ public class PrimeParser {
             delete(rest, log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
-        
+
         case "todo":
             // input is a todo
             // todos need task descriptions
             if (rest.isEmpty()) {
                 throw new PrimeException("!! : Please provide me a description of your task.");
-                //Ui.showLine();
-            } 
+                // Ui.showLine();
+            }
+
             addTodo(rest, log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
 
         case "deadline":
             // input is a deadline
-            // deadlines need task descriptions and a deadline 
+            // deadlines need task descriptions and a deadline
             if (rest.isEmpty()) {
                 throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
             }
+            
             String[] dueStrings = rest.split("/by ", 2);
             if (dueStrings.length != 2) {
-                throw new PrimeException("!! : Please provide me with the task description and the due date in YYYY-MM-DD.");
+                throw new PrimeException("!! : Please provide me with the task description" + 
+                        " and the due date in YYYY-MM-DD.");
             }
+
             addDeadline(dueStrings[0], dueStrings[1], log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
@@ -187,22 +196,26 @@ public class PrimeParser {
             if (rest.isEmpty()) {
                 throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
             }
+
             String[] timingsArray = rest.split("/from ", 2);
             if (timingsArray.length != 2) {
-                throw new PrimeException("!! : Please provide me with the task description, start and end times.");
+                throw new PrimeException("!! : Please provide me with the task description, " + 
+                        "start and end times.");
             }
+
             String timings = timingsArray[1];
             String[] dates = timings.split("/to ", 2);
             if (dates.length != 2) {
-                throw new PrimeException(
-                        "!! : Are you missing the start or end times? They must be in the correct order.");
+                throw new PrimeException("!! : Are you missing the start or end times?" + 
+                        " They must be in the correct order.");
             }
-            addEvent(timingsArray[0].trim(), dates[0], dates[1], log);
             
+            addEvent(timingsArray[0].trim(), dates[0], dates[1], log);
+
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
             return true;
 
-        default: 
+        default:
             throw new PrimeException("!! : I am sorry, I do not recognise this instruction...");
         }
     }
