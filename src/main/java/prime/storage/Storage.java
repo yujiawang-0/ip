@@ -15,9 +15,20 @@ import prime.task.ToDo;
 
 import java.time.LocalDate;
 
+/**
+ * handles persistent storage of tasks by reading from and writing to a local file.
+ * 
+ * tasks are saved in a .txt file and reconstructed when the application
+ * starts, allowing task data to persist when prime stops and starts.
+ */
 public class Storage {
     private static final String FILE_PATH = "data/prime.txt";
 
+    /**
+     * ensure that data file exists and creates a prime.txt storage file under /data folder
+     * 
+     * @throws PrimeException   if the storage file cannot be created or accessed
+     */
     public Storage() throws PrimeException{
         try {
             File file = new File(FILE_PATH);
@@ -28,6 +39,12 @@ public class Storage {
         }
     }
 
+    /**
+     * saves the current list to the storage file
+     * 
+     * @param log   list of tasks to be stored
+     * @throws PrimeException   if an error occurs while writing to the file
+     */
     public void saveData(ArrayList<ToDo> log) throws PrimeException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH))) {
             for (ToDo task : log) {
@@ -40,6 +57,12 @@ public class Storage {
     }
 
 
+    /**
+     * load tasks from the storage file and reconstructs them into an ArrayList
+     * 
+     * @return  an ArrayList of ToDos
+     * @throws PrimeException   if an error occurs while reading or parsing the file
+     */
     public ArrayList<ToDo> loadData() throws PrimeException{
         ArrayList<ToDo> tasks = new ArrayList<>();
 
@@ -55,7 +78,13 @@ public class Storage {
         return tasks;
     }
 
-
+    /**
+     * parses a single line from the storage file and converts it into a task object.
+     * 
+     * @param line  a line from the data file
+     * @return  the reconstructed task in a ToDo
+     * @throws PrimeException   If the data format is not as expected
+     */
     private ToDo parseLine(String line) throws PrimeException{
         try {
             String[] parts = line.split(" \\| ");
@@ -81,34 +110,3 @@ public class Storage {
     }
 
 }
-
-
-
-// public class FilesClassDemo {
-
-//     public static void main(String[] args) throws IOException{
-//         Files.copy(Paths.get("data/fruits.txt"), Paths.get("temp/fruits2.txt"));
-//         Files.delete(Paths.get("temp/fruits2.txt"));
-//     }
-
-// }
-
-
-// public class FileWritingDemo {
-
-//     private static void writeToFile(String filePath, String textToAdd) throws IOException {
-//         FileWriter fw = new FileWriter(filePath);
-//         fw.write(textToAdd);
-//         fw.close();
-//     }
-
-//     public static void main(String[] args) {
-//         String file2 = "temp/lines.txt";
-//         try {
-//             writeToFile(file2, "first line" + System.lineSeparator() + "second line");
-//         } catch (IOException e) {
-//             System.out.println("Something went wrong: " + e.getMessage());
-//         }
-//     }
-
-// }

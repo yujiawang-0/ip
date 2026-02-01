@@ -9,8 +9,20 @@ import prime.task.Log;
 import prime.task.ToDo;
 import prime.ui.Ui;
 
+/**
+ * parses user input and executes the corresponding command
+ * on the log
+ */
+
 public class PrimeParser {
     
+    /**
+     * marks a ToDo as done
+     * 
+     * @param rest  the rest of the instruction, which should a number in the form of a string 
+     * @param log   the log to operate on
+     * @throws PrimeException if the instruction is invalid
+     */
     public static void mark(String rest, Log log) throws PrimeException {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to mark.");
@@ -30,6 +42,13 @@ public class PrimeParser {
                 
     }
 
+    /**
+     * unmarks a ToDo -> marks a ToDo as undone
+     * 
+     * @param rest  the rest of the instruction, which should a number in the form of a string
+     * @param log   the log to operate on
+     * @throws PrimeException   if the instruction is invalid
+     */
     public static void unmark(String rest, Log log) throws PrimeException {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to unmark.");
@@ -49,7 +68,12 @@ public class PrimeParser {
                 
     }
 
-    // adds Todo to log and repeats what has been added
+    /**
+     * adds a ToDo to log and prints what has been added
+     * 
+     * @param item  the ToDo description
+     * @param log   the log to operate on
+     */
     public static void addTodo(String item, Log log) {
         ToDo todo = new ToDo(false, item);
         log.add(todo);
@@ -57,7 +81,14 @@ public class PrimeParser {
         Ui.showMessage("    " + todo.printTask());
     }
 
-    // adds Event to log and repeats what has been added
+    /**
+     * adds a Deadline to log and prints what has been added
+     * 
+     * @param item  the deadline description
+     * @param dueDate   the due date of the deadline
+     * @param log   the log to operate on
+     * @throws PrimeException   when the date inputted is in the wrong format
+     */
     public static void addDeadline(String item, String dueDate, Log log) throws PrimeException{
         try {
             LocalDate by = LocalDate.parse(dueDate.trim());
@@ -72,7 +103,15 @@ public class PrimeParser {
         
     }
 
-    // adds Deadline to log and repeats what has been added
+    /**
+     * adds Event to log and prints what has been added
+     * 
+     * @param item  the event description
+     * @param start the start date of the deadline
+     * @param end   the end date of the deadline
+     * @param log   the log to operate on
+     * @throws PrimeException   when the date inputted is in the wrong format
+     */
     public static void addEvent(String item, String start, String end, Log log) throws PrimeException{
         try {
             LocalDate from = LocalDate.parse(start.trim());
@@ -88,7 +127,13 @@ public class PrimeParser {
         
     }
 
-    // delete Todo from the log and repeats what was deleted
+    /**
+     * delete Todo from the log and repeats what was deleted
+     * 
+     * @param rest  the rest of the instruction, which should a number in the form of a string
+     * @param log   the log to operate on
+     * @throws PrimeException   if the instruction is invalid
+     */
     public static void delete(String rest, Log log) throws PrimeException {
         if (rest.isEmpty()) {
             throw new PrimeException("!! : Please tell me which task to delete.");
@@ -108,6 +153,14 @@ public class PrimeParser {
                 
     }
     
+    /**
+     * parses a user input and executes it
+     * 
+     * @param input string input by the user
+     * @param log   the log to operate on
+     * @return  false if user input is "bye" or "goodbye", true otherwise. signals if the program should continue running
+     * @throws PrimeException   if the command is invalid
+     */
     public static boolean parse(String input, Log log) throws PrimeException {
         input = input.trim(); // Prime.java already trims, but parser should also do its own trimming
         if (input.isEmpty()) {

@@ -8,6 +8,11 @@ import prime.task.Log;
 import prime.task.ToDo;
 import prime.ui.Ui;
 
+/**
+ * Main class / entry point for the program
+ * Starts the scanner for user input
+ * initalises log and storage to be used by the rest of the program
+ */
 public class Prime {
     private static final Log log = new Log();
     private static Storage storage;
