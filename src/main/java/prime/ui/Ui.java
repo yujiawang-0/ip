@@ -1,3 +1,5 @@
+package prime.ui;
+
 public class Ui {
     public static final String LINE = "_______________________________________________________________________________________";
 

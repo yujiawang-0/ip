@@ -1,5 +1,8 @@
+package prime.task;
 // keeps tracks of the tasks (todos, events, deadlines) in the log
 import java.util.ArrayList;
+
+import prime.core.PrimeException;
 
 public class Log {
     private static ArrayList<ToDo> log = new ArrayList<>();

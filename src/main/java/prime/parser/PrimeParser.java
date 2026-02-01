@@ -1,4 +1,13 @@
+package prime.parser;
+
 import java.time.LocalDate;
+
+import prime.core.PrimeException;
+import prime.task.Deadline;
+import prime.task.Event;
+import prime.task.Log;
+import prime.task.ToDo;
+import prime.ui.Ui;
 
 public class PrimeParser {
     

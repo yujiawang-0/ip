@@ -1,3 +1,5 @@
+package prime.task;
+
 public class ToDo {
     private String Type = "T";
     private boolean isDone = false;

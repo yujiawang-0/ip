@@ -1,4 +1,12 @@
+package prime.core;
+
 import java.util.Scanner;
+
+import prime.parser.PrimeParser;
+import prime.storage.Storage;
+import prime.task.Log;
+import prime.task.ToDo;
+import prime.ui.Ui;
 
 public class Prime {
     private static final Log log = new Log();
