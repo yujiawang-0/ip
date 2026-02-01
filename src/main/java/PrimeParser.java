@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class PrimeParser {
@@ -17,7 +16,7 @@ public class PrimeParser {
             Ui.showMessage("    " + task.printTask());
 
         } catch (NumberFormatException e) {
-            throw new PrimeException("! : Task number should be a number.");
+            throw new PrimeException("! : There should be a number after the 'mark' instruction.");
         }
                 
     }

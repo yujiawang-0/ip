@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
 public class Storage {
-    private static final String DIR_PATH = "/data";
     private static final String FILE_PATH = "data/prime.txt";
 
     public Storage() throws PrimeException{

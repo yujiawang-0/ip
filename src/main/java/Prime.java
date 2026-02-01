@@ -14,6 +14,7 @@ public class Prime {
             }
 
             Ui.showHello();
+            Ui.showPrime();
 
             Scanner s = new Scanner(System.in);
             boolean isRunning = true;

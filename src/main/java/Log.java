@@ -8,7 +8,10 @@ public class Log {
         log.add(task);
     }
 
-    public void delete(int index) {
+    public void delete(int index) throws PrimeException {
+        if (index < 0 || index >= log.size()) {
+            throw new PrimeException("I'm sorry, but that task does not exist.");
+        }
         log.remove(index);
     }
 
