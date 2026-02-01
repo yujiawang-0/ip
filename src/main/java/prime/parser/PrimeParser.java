@@ -109,6 +109,7 @@ public class PrimeParser {
     }
     
     public static boolean parse(String input, Log log) throws PrimeException {
+        input = input.trim(); // Prime.java already trims, but parser should also do its own trimming
         if (input.isEmpty()) {
             throw new PrimeException("!! : Hmm.. you didn't say anything...");
         }

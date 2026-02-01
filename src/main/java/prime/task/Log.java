@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import prime.core.PrimeException;
 
 public class Log {
-    private static ArrayList<ToDo> log = new ArrayList<>();
+    private ArrayList<ToDo> log = new ArrayList<>();
     
     public void add(ToDo task) {
         log.add(task);
