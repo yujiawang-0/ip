@@ -1,5 +1,9 @@
 package prime.ui;
 
+import java.util.ArrayList;
+import prime.task.ToDo;
+import prime.task.NumberedTask;
+
 public class Ui {
     public static final String LINE = "_______________________________________________________________________________________";
 
@@ -33,6 +37,27 @@ public class Ui {
     // prints error
     public static void showError(String error) {
         System.out.println(error);
+    }
+
+    public static void printArrayList(ArrayList<ToDo> log) {
+        int i = 1;
+        for (ToDo task : log) {
+            System.out.println(i + ". " + task.printTask());
+            i++;
+        }
+    }
+
+    public static void showFindResults(ArrayList<NumberedTask> matches) {
+        if (matches.isEmpty()) {
+            showMessage("There are no tasks that match your search...");
+        } else {
+            showMessage("Here are the matching tasks in yuor list:");
+
+            for (NumberedTask match : matches) {
+                System.out.println((match.getIndex() + 1) + ". " + match.getTask().printTask());
+            }
+        }
+        
     }
 
     public static void showPrime() {
