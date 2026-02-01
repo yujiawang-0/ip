@@ -1,0 +1,26 @@
+help
+hello 
+list
+todo
+todo thing 1
+list
+mark
+mark thing 1
+mark 1
+deadline
+deadline thing 2
+deadline thing 2 /by
+deadline thing 2 /by tuesday
+deadline thing 2 /by 2026-23-12
+deadline thing 2 /by 2026-12-23
+event
+event thing 3
+event thing 3 /from /to
+event thing 3 /from 2025-12-12 /to
+event thing 3 /from 2025-12-12 /to 2025-12-12
+list
+mark -99
+mark 10
+unmark 1
+list
+bye

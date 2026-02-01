@@ -1,7 +1,7 @@
 list
 todo borrow book
-deadline return book /by february
-event CS2109S lecture /from 4pm /to 6pm
+deadline return book /by 2026-02-01
+event CS2109S lecture /from 2025-02-04 /to 2026-02-05
 todo read book
 list
 mark 4
