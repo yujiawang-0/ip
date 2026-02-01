@@ -51,6 +51,6 @@ public class Prime {
         } catch (Exception e) {
             Ui.showError(e.getMessage());
         }
-        
+
     }
 }

@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.fail;
 
-
-
 public class LogTest {
     @Test
     public void get_validIndex_returnsTask() throws Exception {
@@ -22,7 +20,6 @@ public class LogTest {
         Log log = new Log();
         ToDo todo = new ToDo(false, "something");
         log.add(todo);
-        
 
         try {
             assertEquals(todo, log.get(10));
@@ -33,7 +30,4 @@ public class LogTest {
 
     }
 
-
 }
-
-

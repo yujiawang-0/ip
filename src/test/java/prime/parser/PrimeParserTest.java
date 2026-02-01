@@ -8,7 +8,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
-
 public class PrimeParserTest {
     @Test
     void parse_AddTodo_success() throws Exception {
@@ -18,7 +17,7 @@ public class PrimeParserTest {
         assertEquals("read book", log.get(0).getTask());
 
     }
-    
+
     @Test
     void parse_extraSpaces_success() throws Exception {
         Log log = new Log();

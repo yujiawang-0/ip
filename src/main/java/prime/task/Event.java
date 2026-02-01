@@ -1,4 +1,5 @@
 package prime.task;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -8,7 +9,7 @@ public class Event extends ToDo {
     private LocalDate endTime;
 
     public Event(boolean isDone, String Task, LocalDate startTime, LocalDate endTime) {
-        super(isDone, Task); 
+        super(isDone, Task);
         setStart(startTime);
         setEnd(endTime);
     }
@@ -40,15 +41,14 @@ public class Event extends ToDo {
     @Override
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "["+ Type + "]" + "[" + symbol + "] " + getTask() + " (From: " 
-                + getStartString() + " To: "+ getEndString() + ")";
+        return "[" + Type + "]" + "[" + symbol + "] " + getTask() + " (From: "
+                + getStartString() + " To: " + getEndString() + ")";
     }
 
     @Override
     public String toFileString() {
         String symbol = this.getDone() ? "1" : "0";
-        return Type + " | " + symbol + " | " + getTask() + " | " 
-                + getStart() +  " | " + getEnd() ;
+        return Type + " | " + symbol + " | " + getTask() + " | "
+                + getStart() + " | " + getEnd();
     }
 }
-
