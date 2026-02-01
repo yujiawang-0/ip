@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class PrimeParser {
     
@@ -49,19 +50,34 @@ public class PrimeParser {
     }
 
     // adds Event to log and repeats what has been added
-    public static void addDeadline(String item, String dueDate, Log log) {
-        Deadline deadline = new Deadline(false, item, dueDate);
-        log.add(deadline);
-        Ui.showMessage("Understood. I have added to the log:");
-        Ui.showMessage("    " + deadline.printTask());
+    public static void addDeadline(String item, String dueDate, Log log) throws PrimeException{
+        try {
+            LocalDate by = LocalDate.parse(dueDate.trim());
+            Deadline deadline = new Deadline(false, item, by);
+            log.add(deadline);
+            Ui.showMessage("Understood. I have added to the log:");
+            Ui.showMessage("    " + deadline.printTask());
+
+        } catch (Exception e) {
+            throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
+        }
+        
     }
 
     // adds Deadline to log and repeats what has been added
-    public static void addEvent(String item, String start, String end, Log log) {
-        Event event = new Event(false, item, start, end);
-        log.add(event);
-        Ui.showMessage("Understood. I have added to the log:");
-        Ui.showMessage("    " + event.printTask());
+    public static void addEvent(String item, String start, String end, Log log) throws PrimeException{
+        try {
+            LocalDate from = LocalDate.parse(start.trim());
+            LocalDate to = LocalDate.parse(end.trim());
+            Event event = new Event(false, item, from, to);
+            log.add(event);
+            Ui.showMessage("Understood. I have added to the log:");
+            Ui.showMessage("    " + event.printTask());
+
+        } catch (Exception e) {
+            throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
+        }
+        
     }
 
     // delete Todo from the log and repeats what was deleted
@@ -150,7 +166,7 @@ public class PrimeParser {
             }
             String[] dueStrings = rest.split("/by ", 2);
             if (dueStrings.length != 2) {
-                throw new PrimeException("!! : Please provide me with the task description and the due date.");
+                throw new PrimeException("!! : Please provide me with the task description and the due date in YYYY-MM-DD.");
             }
             addDeadline(dueStrings[0], dueStrings[1], log);
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");

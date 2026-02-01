@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Storage {
     private static final String DIR_PATH = "/data";
@@ -60,10 +61,10 @@ public class Storage {
                 return new ToDo(isDone, parts[2]);
             
             case "D":
-                return new Deadline(isDone, parts[2], parts[3]);
+                return new Deadline(isDone, parts[2].trim(), LocalDate.parse(parts[3].trim()));
             
             case "E":
-                return new Event(isDone, parts[2], parts[3], parts[4]);    
+                return new Event(isDone, parts[2], LocalDate.parse(parts[3].trim()), LocalDate.parse(parts[4].trim()));    
 
             default:
                 throw new PrimeException("There seems to be a corrupted data file...");
