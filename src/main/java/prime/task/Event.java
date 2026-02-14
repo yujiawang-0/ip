@@ -5,24 +5,24 @@ import java.time.format.DateTimeFormatter;
 
 /**
  * Represents an event task with a start date and an end date.
- * 
+ *
  * An {@code Event} is a type of {@link ToDo} that occurs over a period of time
  */
 public class Event extends ToDo {
-    private String Type = "E";
+    private String type = "E";
     private LocalDate startTime;
     private LocalDate endTime;
 
     /**
      * Constructs an Event task.
-     * 
+     *
      * @param isDone    Whether the event is marked as completed.
      * @param Task  The description of the event.
      * @param startTime The start date of the event.
      * @param endTime   The start date of the event.
      */
-    public Event(boolean isDone, String Task, LocalDate startTime, LocalDate endTime) {
-        super(isDone, Task);
+    public Event(boolean isDone, String task, LocalDate startTime, LocalDate endTime) {
+        super(isDone, task);
         setStart(startTime);
         setEnd(endTime);
     }
@@ -59,7 +59,7 @@ public class Event extends ToDo {
     @Override
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "[" + Type + "]" + "[" + symbol + "] " + getTask() + " (From: "
+        return "[" + type + "]" + "[" + symbol + "] " + getTask() + " (From: "
                 + getStartString() + " To: " + getEndString() + ")";
     }
 
@@ -71,7 +71,7 @@ public class Event extends ToDo {
     @Override
     public String toFileString() {
         String symbol = this.getDone() ? "1" : "0";
-        return Type + " | " + symbol + " | " + getTask() + " | "
+        return type + " | " + symbol + " | " + getTask() + " | "
                 + getStart() + " | " + getEnd();
     }
 }

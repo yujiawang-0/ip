@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import prime.core.PrimeException;
@@ -13,11 +14,10 @@ import prime.task.Deadline;
 import prime.task.Event;
 import prime.task.ToDo;
 
-import java.time.LocalDate;
 
 /**
  * handles persistent storage of tasks by reading from and writing to a local file.
- * 
+ *
  * tasks are saved in a .txt file and reconstructed when the application
  * starts, allowing task data to persist when prime stops and starts.
  */
@@ -26,7 +26,7 @@ public class Storage {
 
     /**
      * ensure that data file exists and creates a prime.txt storage file under /data folder
-     * 
+     *
      * @throws PrimeException   if the storage file cannot be created or accessed
      */
     public Storage() throws PrimeException {
@@ -41,7 +41,7 @@ public class Storage {
 
     /**
      * saves the current list to the storage file
-     * 
+     *
      * @param log   list of tasks to be stored
      * @throws PrimeException   if an error occurs while writing to the file
      */
@@ -58,7 +58,7 @@ public class Storage {
 
     /**
      * load tasks from the storage file and reconstructs them into an ArrayList
-     * 
+     *
      * @return  an ArrayList of ToDos
      * @throws PrimeException   if an error occurs while reading or parsing the file
      */
@@ -79,7 +79,7 @@ public class Storage {
 
     /**
      * parses a single line from the storage file and converts it into a task object.
-     * 
+     *
      * @param line  a line from the data file
      * @return  the reconstructed task in a ToDo
      * @throws PrimeException   If the data format is not as expected

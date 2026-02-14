@@ -1,16 +1,16 @@
 package prime.parser;
 
-import prime.task.Log;
-import prime.task.ToDo;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import prime.task.Log;
+import prime.task.ToDo;
+
 public class PrimeParserTest {
     @Test
-    void parse_AddTodo_success() throws Exception {
+    void parse_addTodo_success() throws Exception {
         Log log = new Log();
         PrimeParser.parse("todo read book", log);
         assertTrue(log.get(0) instanceof ToDo);

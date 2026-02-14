@@ -1,44 +1,67 @@
 package prime.ui;
 
 import java.util.ArrayList;
-import prime.task.ToDo;
+
 import prime.task.NumberedTask;
+import prime.task.ToDo;
 
+/**
+ * Ui class handles all the printing in the CLI
+ */
 public class Ui {
-    public static final String LINE = "_______________________________________________________________________________________";
+    public static final String LINE =
+            "_______________________________________________________________________________________";
 
-    // prints greeting when called
+    /**
+     * Prints greeting when called
+     */
     public static void showHello() {
         System.out.println(LINE);
         System.out.println("I AM OPTIMUS PRIME.\nHello, little one.");
         System.out.println(LINE);
     }
 
-    // prints hello when called
+    /**
+     * Prints hello when called
+     */
     public static void showHelloTwo() {
         System.out.println("Hello, child.");
     }
 
-    // prints goodbye when called
+    /**
+     * Prints goodbye when called
+     */
     public static void showGoodbye() {
         System.out.println("Goodbye, little one.");
     }
 
-    // prints line
+    /**
+     * Prints line
+     */
     public static void showLine() {
         System.out.println(LINE);
     }
 
-    // prints message
+    /**
+     * Prints message
+     * @param message is the message to be printed
+     */
     public static void showMessage(String message) {
         System.out.println(message);
     }
 
-    // prints error
+    /**
+     * Prints error
+     * @param error
+     */
     public static void showError(String error) {
         System.out.println(error);
     }
 
+    /**
+     * Print log
+     * @param log
+     */
     public static void printArrayList(ArrayList<ToDo> log) {
         int i = 1;
         for (ToDo task : log) {
@@ -47,6 +70,10 @@ public class Ui {
         }
     }
 
+    /**
+     * Print items found during the find command
+     * @param matches tasks that matches the word to be found
+     */
     public static void showFindResults(ArrayList<NumberedTask> matches) {
         if (matches.isEmpty()) {
             showMessage("There are no tasks that match your search...");
@@ -57,9 +84,12 @@ public class Ui {
                 System.out.println((match.getIndex() + 1) + ". " + match.getTask().printTask());
             }
         }
-        
+
     }
 
+    /**
+     * Prints the image of Optimus Prime
+     */
     public static void showPrime() {
         System.out.println("""
                 ..........-*+:............................................................................

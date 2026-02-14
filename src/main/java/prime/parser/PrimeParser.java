@@ -20,8 +20,8 @@ public class PrimeParser {
 
     /**
      * marks a ToDo as done
-     * 
-     * @param rest  the rest of the instruction, which should a number in the form of a string 
+     *
+     * @param rest  the rest of the instruction, which should a number in the form of a string
      * @param log   the log to operate on
      * @throws PrimeException if the instruction is invalid
      */
@@ -45,7 +45,7 @@ public class PrimeParser {
 
     /**
      * unmarks a ToDo -> marks a ToDo as undone
-     * 
+     *
      * @param rest  the rest of the instruction, which should a number in the form of a string
      * @param log   the log to operate on
      * @throws PrimeException   if the instruction is invalid
@@ -71,7 +71,7 @@ public class PrimeParser {
 
     /**
      * adds a ToDo to log and prints what has been added
-     * 
+     *
      * @param item  the ToDo description
      * @param log   the log to operate on
      */
@@ -85,7 +85,7 @@ public class PrimeParser {
 
     /**
      * adds a Deadline to log and prints what has been added
-     * 
+     *
      * @param item  the deadline description
      * @param dueDate   the due date of the deadline
      * @param log   the log to operate on
@@ -109,7 +109,7 @@ public class PrimeParser {
 
     /**
      * adds Event to log and prints what has been added
-     * 
+     *
      * @param item  the event description
      * @param start the start date of the deadline
      * @param end   the end date of the deadline
@@ -135,7 +135,7 @@ public class PrimeParser {
 
     /**
      * delete Todo from the log and repeats what was deleted
-     * 
+     *
      * @param rest  the rest of the instruction, which should a number in the form of a string
      * @param log   the log to operate on
      * @throws PrimeException   if the instruction is invalid
@@ -161,10 +161,11 @@ public class PrimeParser {
 
     /**
      * parses a user input and executes it
-     * 
+     *
      * @param input string input by the user
      * @param log   the log to operate on
-     * @return  false if user input is "bye" or "goodbye", true otherwise. signals if the program should continue running
+     * @return  false if user input is "bye" or "goodbye", true otherwise.
+     *          signals if the program should continue running
      * @throws PrimeException   if the command is invalid
      */
     public static boolean parse(String input, Log log) throws PrimeException {
@@ -236,11 +237,11 @@ public class PrimeParser {
             if (rest.isEmpty()) {
                 throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
             }
-            
+
             String[] dueStrings = rest.split("/by ", 2);
             if (dueStrings.length != 2) {
-                throw new PrimeException("!! : Please provide me with the task description" + 
-                        " and the due date in YYYY-MM-DD.");
+                throw new PrimeException("!! : Please provide me with the task description"
+                        + " and the due date in YYYY-MM-DD.");
             }
 
             addDeadline(dueStrings[0], dueStrings[1], log);
@@ -256,17 +257,17 @@ public class PrimeParser {
 
             String[] timingsArray = rest.split("/from ", 2);
             if (timingsArray.length != 2) {
-                throw new PrimeException("!! : Please provide me with the task description, " + 
-                        "start and end times.");
+                throw new PrimeException("!! : Please provide me with the task description, "
+                        + "start and end times.");
             }
 
             String timings = timingsArray[1];
             String[] dates = timings.split("/to ", 2);
             if (dates.length != 2) {
-                throw new PrimeException("!! : Are you missing the start or end times?" + 
-                        " They must be in the correct order.");
+                throw new PrimeException("!! : Are you missing the start or end times?"
+                        + " They must be in the correct order.");
             }
-            
+
             addEvent(timingsArray[0].trim(), dates[0], dates[1], log);
 
             Ui.showMessage("You have " + log.size() + " tasks. Let's keep at it!");
