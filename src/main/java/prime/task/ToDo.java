@@ -2,23 +2,23 @@ package prime.task;
 
 /**
  * Represents a basic to-do task without any associated date or time.
- * 
+ *
  * A {@code ToDo} task contains a description and a completion status.
  */
 public class ToDo {
-    private String Type = "T";
+    private String type = "T";
     private boolean isDone = false;
-    private String Task;
+    private String task;
 
     /**
      * Constructs a to-do task.
      *
      * @param isDone Whether the task is initially marked as completed.
-     * @param Task   The description of the task.
+     * @param task   The description of the task.
      */
-    public ToDo(boolean isDone, String Task) {
+    public ToDo(boolean isDone, String task) {
         setDone(isDone);
-        setTask(Task);
+        setTask(task);
     }
 
     // getter for completion
@@ -33,12 +33,12 @@ public class ToDo {
 
     // getter for task
     public String getTask() {
-        return this.Task;
+        return this.task;
     }
 
     // setter for task
     public void setTask(String input) {
-        this.Task = input;
+        this.task = input;
     }
 
     /**
@@ -48,7 +48,7 @@ public class ToDo {
      */
     public String printTask() {
         String symbol = this.getDone() ? "X" : " ";
-        return "[" + Type + "]" + "[" + symbol + "] " + getTask();
+        return "[" + type + "]" + "[" + symbol + "] " + getTask();
     }
 
     /**
@@ -58,7 +58,7 @@ public class ToDo {
      */
     public String toFileString() {
         String symbol = this.getDone() ? "1" : "0";
-        return Type + " | " + symbol + " | " + getTask();
+        return type + " | " + symbol + " | " + getTask();
     }
 
 }

@@ -6,7 +6,7 @@ import prime.core.PrimeException;
 
 /**
  * Stores and manages the list of tasks in Prime.
- * 
+ *
  * The log keeps track of all task types, including todos, deadlines, and events.
  */
 public class Log {
@@ -51,17 +51,23 @@ public class Log {
         return log;
     }
 
+    /**
+     * Given a keyword, find all tasks in the log that match the keyword
+     *
+     * @param keyword
+     * @return all tasks in the log that match the keyword
+     */
     public ArrayList<NumberedTask> find(String keyword) {
         ArrayList<NumberedTask> results = new ArrayList<>();
         String lowercase = keyword.toLowerCase();
-        
+
         for (int i = 0; i < log.size(); i++) {
             ToDo task = log.get(i);
             if (task.getTask().toLowerCase().contains(lowercase)) {
                 results.add(new NumberedTask(i, task));
             }
         }
-        
+
         return results;
     }
 
