@@ -49,8 +49,10 @@ public class Ui {
      *
      * @param message is the message to be printed
      */
-    public static void buildMessage(String message) {
-        response.append(message).append("\n");
+    public static void buildMessage(String... messages) {
+        for (String message : messages) {
+            response.append(message).append("\n");
+        }
     }
 
     /**
@@ -98,7 +100,7 @@ public class Ui {
         if (matches.isEmpty()) {
             buildMessage("There are no tasks that match your search...");
         } else {
-            buildMessage("Here are the matching tasks in yuor list:");
+            buildMessage("Here are the matching tasks in your list:");
 
             for (NumberedTask match : matches) {
                 response.append(match.getIndex() + 1)
