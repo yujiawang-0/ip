@@ -196,8 +196,8 @@ public class PrimeParser {
 
             case "list":
                 // prints out list of current tasks
-                Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
-                Ui.buildMessage("Here are your tasks currently in my log:");
+                Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!",
+                        "Here are your tasks currently in my log:" );
                 Ui.printArrayList(log.getAll());
 
                 return true;
