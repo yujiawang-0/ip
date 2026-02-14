@@ -9,8 +9,10 @@ import prime.task.ToDo;
  * Ui class handles all the printing in the CLI
  */
 public class Ui {
-    public static final String LINE =
-            "_______________________________________________________________________________________";
+
+    private static StringBuilder response = new StringBuilder();
+
+    public static final String LINE = "_______________________________________________________________________________________";
 
     /**
      * Prints greeting when called
@@ -43,45 +45,66 @@ public class Ui {
     }
 
     /**
-     * Prints message
+     * builds message to be passed to the GUI
+     *
      * @param message is the message to be printed
      */
-    public static void showMessage(String message) {
-        System.out.println(message);
+    public static void buildMessage(String message) {
+        response.append(message).append("\n");
     }
 
     /**
-     * Prints error
+     * Builds error message to be passed into the GUI
+     *
      * @param error
      */
-    public static void showError(String error) {
-        System.out.println(error);
+    public static void buildError(String error) {
+        response.append(error).append("\n");
+    }
+
+    /**
+     * Get response for GUI to print
+     * @return string to be printed
+     */
+    public static String getResponse() {
+        String result = response.toString();
+        response.setLength(0); // clear the result after reading
+        return result;
     }
 
     /**
      * Print log
+     *
      * @param log
      */
     public static void printArrayList(ArrayList<ToDo> log) {
         int i = 1;
         for (ToDo task : log) {
-            System.out.println(i + ". " + task.printTask());
+            response.append(i)
+                    .append(". ")
+                    .append(task.printTask())
+                    .append("\n");
+
             i++;
         }
     }
 
     /**
      * Print items found during the find command
+     *
      * @param matches tasks that matches the word to be found
      */
     public static void showFindResults(ArrayList<NumberedTask> matches) {
         if (matches.isEmpty()) {
-            showMessage("There are no tasks that match your search...");
+            buildMessage("There are no tasks that match your search...");
         } else {
-            showMessage("Here are the matching tasks in yuor list:");
+            buildMessage("Here are the matching tasks in yuor list:");
 
             for (NumberedTask match : matches) {
-                System.out.println((match.getIndex() + 1) + ". " + match.getTask().printTask());
+                response.append(match.getIndex() + 1)
+                        .append(". ")
+                        .append(match.getTask().printTask())
+                        .append("\n");
             }
         }
 
