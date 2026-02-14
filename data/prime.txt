@@ -1,8 +1,0 @@
-E | 0 | task 1 | 2025-12-11 | 2025-01-31
-D | 1 | task 2 | 2026-02-04
-T | 1 | add prime
-E | 1 | thing a | 2026-02-01 | 2026-02-02
-T | 0 | return book
-T | 0 | blah blah
-T | 1 | thing 3
-E | 0 | 2103 tutorial | 2026-02-05 | 2026-02-05
