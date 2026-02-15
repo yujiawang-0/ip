@@ -12,6 +12,10 @@ import prime.core.PrimeException;
 public class Log {
     private ArrayList<ToDo> log = new ArrayList<>();
 
+    /**
+     * Adds a task to the log
+     * @param task  task to be added to the log
+     */
     public void add(ToDo task) {
         log.add(task);
 

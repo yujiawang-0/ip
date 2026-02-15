@@ -1,8 +1,8 @@
 package prime.parser;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 import prime.core.PrimeException;
 import prime.task.Deadline;
@@ -132,8 +132,8 @@ public class PrimeParser {
             throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
         }
 
-       Deadline deadline = parseDeadline(rest);
-       log.add(deadline);
+        Deadline deadline = parseDeadline(rest);
+        log.add(deadline);
 
 
         Ui.buildMessage("Understood. I have added to the log:",
@@ -181,6 +181,7 @@ public class PrimeParser {
         }
 
         Event event = parseEvent(rest);
+        log.add(event);
 
         Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
         showTaskCount(log);
@@ -217,13 +218,41 @@ public class PrimeParser {
     }
 
     /**
+     * Updates the specific field that the user wants to update with the newValue
+     * Only able to update one field of one task at one time.
+     */
+    public static void update(String rest, Log log) throws PrimeException {
+        String[] parts = rest.split("\\s+", 3);
+        if (parts.length < 3) {
+            throw new PrimeException("!! : Usage: update <index> <field> <newValue>");
+        }
+
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]) - 1;
+        } catch (NumberFormatException e) {
+            throw new PrimeException("!! : Index must be a number.");
+        }
+
+        String field = parts[1].toLowerCase();
+        String newValue = parts[2].trim();
+
+        ToDo task = log.get(index);
+
+        task.updateField(field, newValue);
+
+        Ui.buildMessage("Understood. I updated the task:", "    " + task.printTask());
+
+    }
+
+    /**
      * Lists all the current tasks in the Log
      * @param log
      */
     public static void list(Log log) {
         // prints out list of current tasks
         showTaskCount(log);
-        Ui.buildMessage("Here are your tasks currently in my log:" );
+        Ui.buildMessage("Here are your tasks currently in my log:");
         Ui.printArrayList(log.getAll());
     }
 
@@ -306,6 +335,10 @@ public class PrimeParser {
 
         case "event":
             addEvent(rest, log);
+            return true;
+
+        case "update":
+            update(rest, log);
             return true;
 
         default:

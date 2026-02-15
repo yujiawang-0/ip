@@ -2,6 +2,9 @@ package prime.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import prime.core.PrimeException;
 
 /**
  * Represents a ToDo with a specific due date
@@ -11,7 +14,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends ToDo {
     /** Type identifier used when saving this task to storage and for Ui. */
-    private final static String TYPE = "D";
+    private static final String TYPE = "D";
 
     /** The due date of the deadline. */
     private LocalDate due;
@@ -66,5 +69,28 @@ public class Deadline extends ToDo {
     public String toFileString() {
         String symbol = this.isDone() ? "1" : "0";
         return TYPE + " | " + symbol + " | " + getTask() + " | " + getDue();
+    }
+
+    /**
+     * Update fields for deadlines
+     */
+    @Override
+    public void updateField(String field, String newValue) throws PrimeException {
+        switch (field) {
+        case "desc":
+            super.updateField(field, newValue);
+            break;
+
+        case "by":
+            try {
+                setDue(LocalDate.parse(newValue));
+            } catch (DateTimeParseException e) {
+                throw new PrimeException("!! : Invalid date format. Please use YYYY-MM-DD.");
+            }
+            return;
+
+        default:
+            throw new PrimeException("!! : Invalid field for Deadline type");
+        }
     }
 }
