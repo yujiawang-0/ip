@@ -40,7 +40,10 @@ public class ToDo {
 
     // setter for task
     public void setTask(String input) {
-        this.task = input;
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("!! : Task description cannot be empty");
+        }
+        this.task = input.trim();
     }
 
     /**

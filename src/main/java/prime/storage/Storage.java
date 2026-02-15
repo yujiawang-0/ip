@@ -32,7 +32,7 @@ public class Storage {
     public Storage() throws PrimeException {
         try {
             File file = new File(FILE_PATH);
-            file.getParentFile().mkdir(); // create ./data if missing
+            file.getParentFile().mkdirs(); // create ./data if missing
             file.createNewFile(); // create the storage file if missing
         } catch (IOException e) {
             throw new PrimeException("I am unable to initialise storage: " + e.getMessage());
@@ -94,14 +94,20 @@ public class Storage {
                 return new ToDo(isDone, parts[2]);
 
             case "D":
+                if (parts.length != 4) {
+                    throw new PrimeException("Corrupted deadline entry.");
+                }
                 return new Deadline(isDone, parts[2].trim(), LocalDate.parse(parts[3].trim()));
 
             case "E":
+                if (parts.length != 5) {
+                    throw new PrimeException("Corrupted event entry.");
+                }
                 return new Event(isDone, parts[2], LocalDate.parse(parts[3].trim()),
                         LocalDate.parse(parts[4].trim()));
 
             default:
-                throw new PrimeException("There seems to be a corrupted data file...");
+                throw new PrimeException("Unknown task type encountered...");
             }
         } catch (Exception e) {
             throw new PrimeException("There seems to be a corrupted data file...");

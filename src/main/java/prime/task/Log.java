@@ -17,6 +17,9 @@ public class Log {
      * @param task  task to be added to the log
      */
     public void add(ToDo task) {
+        if (task == null) {
+            throw new IllegalArgumentException("!! : Task cannot be null");
+        }
         log.add(task);
 
         assert log.size() > 0 : "Log should not be empty after adding a task";
@@ -54,7 +57,7 @@ public class Log {
     }
 
     public ArrayList<ToDo> getAll() {
-        return log;
+        return new ArrayList<>(log); // ensure that the original log is immutable
     }
 
     /**
@@ -65,6 +68,10 @@ public class Log {
      */
     public ArrayList<NumberedTask> find(String keyword) {
         ArrayList<NumberedTask> results = new ArrayList<>();
+        if (keyword == null || keyword.trim().isEmpty()) {
+            return results;
+        }
+        
         String lowercase = keyword.toLowerCase();
 
         for (int i = 0; i < log.size(); i++) {

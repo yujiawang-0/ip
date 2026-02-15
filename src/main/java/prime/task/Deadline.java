@@ -36,6 +36,9 @@ public class Deadline extends ToDo {
     }
 
     public void setDue(LocalDate dueDate) {
+        if (dueDate == null) {
+            throw new IllegalArgumentException("!! : Due date cannot be null.");
+        }
         this.due = dueDate;
     }
 
@@ -83,7 +86,7 @@ public class Deadline extends ToDo {
 
         case "by":
             try {
-                setDue(LocalDate.parse(newValue));
+                setDue(LocalDate.parse(newValue.trim()));
             } catch (DateTimeParseException e) {
                 throw new PrimeException("!! : Invalid date format. Please use YYYY-MM-DD.");
             }

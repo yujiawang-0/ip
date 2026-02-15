@@ -24,8 +24,18 @@ public class Event extends ToDo {
      * @param startTime The start date of the event.
      * @param endTime   The start date of the event.
      */
-    public Event(boolean isDone, String task, LocalDate startTime, LocalDate endTime) {
+    public Event(boolean isDone, String task, LocalDate startTime, LocalDate endTime) throws PrimeException {
         super(isDone, task);
+
+        // should never reach this code because the parser already checks for inputs
+        if (startTime == null || endTime == null) {
+            throw new PrimeException("Dates cannot be null");
+        }
+
+        if (startTime.isAfter(endTime)) {
+            throw new IllegalArgumentException("Are you sure? Start date should be before end date.");
+        }
+
         setStart(startTime);
         setEnd(endTime);
     }

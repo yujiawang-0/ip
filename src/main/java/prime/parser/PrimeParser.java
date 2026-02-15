@@ -86,7 +86,7 @@ public class PrimeParser {
     public static void addToDo(String item, Log log) throws PrimeException {
         // input is a todo
         // todos need task descriptions
-        if (item.isEmpty()) {
+        if (item.trim().isEmpty()) {
             throw new PrimeException("!! : Please provide me a description of your task.");
         }
 
@@ -180,7 +180,12 @@ public class PrimeParser {
             throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
         }
 
-        Event event = parseEvent(rest);
+        Event event;
+        try {
+            event = parseEvent(rest);
+        } catch (IllegalArgumentException e) {
+            throw new PrimeException(e.getMessage());
+        }
         log.add(event);
 
         Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
@@ -264,7 +269,7 @@ public class PrimeParser {
      * @throws PrimeException
      */
     public static void find(String rest, Log log) throws PrimeException {
-        if (rest.isEmpty()) {
+        if (rest.trim().isEmpty()) {
             throw new PrimeException("!! : Please provide me a search keyword...");
         }
         ArrayList<NumberedTask> result = log.find(rest);
