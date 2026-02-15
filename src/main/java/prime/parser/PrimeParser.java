@@ -181,6 +181,7 @@ public class PrimeParser {
         }
 
         Event event = parseEvent(rest);
+        log.add(event);
 
         Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
         showTaskCount(log);
@@ -216,12 +217,32 @@ public class PrimeParser {
         showTaskCount(log);
     }
 
-    private static void update(String rest, Log log) throws PrimeException {
-        
-    }
+    /**
+     * Updates the specific field that the user wants to update with the newValue
+     * Only able to update one field of one task at one time.
+     */
+    public static void update(String rest, Log log) throws PrimeException {
+        String[] parts = rest.split("\\s+", 3);
+        if (parts.length < 3) {
+            throw new PrimeException("!! : Usage: update <index> <field> <newValue>");
+        }
 
-    private static void update(String rest, Log log) throws PrimeException {
-        
+        int index;
+        try {
+            index = Integer.parseInt(parts[0]) - 1;
+        } catch (NumberFormatException e) {
+            throw new PrimeException("!! : Index must be a number.");
+        }
+
+        String field = parts[1].toLowerCase();
+        String newValue = parts[2].trim();
+
+        ToDo task = log.get(index);
+
+        task.updateField(field, newValue);
+
+        Ui.buildMessage("Understood. I updated the task:", "    " + task.printTask());
+
     }
 
     /**
@@ -316,9 +337,9 @@ public class PrimeParser {
             addEvent(rest, log);
             return true;
 
-            case "update":
-
-            case "update":
+        case "update":
+            update(rest, log);
+            return true;
 
         default:
             throw new PrimeException("!! : I am sorry, I do not recognise this instruction...");

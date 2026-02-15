@@ -1,5 +1,7 @@
 package prime.task;
 
+import prime.core.PrimeException;
+
 /**
  * Represents a basic to-do task without any associated date or time.
  *
@@ -59,6 +61,23 @@ public class ToDo {
     public String toFileString() {
         String symbol = this.isDone() ? "1" : "0";
         return TYPE + " | " + symbol + " | " + getTask();
+    }
+
+    /**
+     * Updates the fields in ToDos
+     * @param field             to be updated
+     * @param newValue          new value to replace the old value
+     * @throws PrimeException   if this field does not exist in this type of task
+     */
+    public void updateField(String field, String newValue) throws PrimeException {
+        switch (field) {
+        case "desc":
+            setTask(newValue);
+            break;
+
+        default:
+            throw new PrimeException("!! : Invalid field for ToDo type");
+        }
     }
 
 }

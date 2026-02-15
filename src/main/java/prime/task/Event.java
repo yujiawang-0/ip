@@ -2,6 +2,9 @@ package prime.task;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
+import prime.core.PrimeException;
 
 /**
  * Represents an event task with a start date and an end date.
@@ -73,5 +76,36 @@ public class Event extends ToDo {
         String symbol = this.isDone() ? "1" : "0";
         return TYPE + " | " + symbol + " | " + getTask() + " | "
                 + getStart() + " | " + getEnd();
+    }
+
+    /**
+     * Updates fields for Events
+     */
+    @Override
+    public void updateField(String field, String newValue) throws PrimeException {
+        switch (field) {
+        case "desc":
+            super.updateField(field, newValue);
+            break;
+
+        case "from":
+            try {
+                setStart(LocalDate.parse(newValue));
+            } catch (DateTimeParseException e) {
+                throw new PrimeException("!! : Invalid date format. Please use YYYY-MM-DD.");
+            }
+            return;
+
+        case "to":
+            try {
+                setEnd(LocalDate.parse(newValue));
+            } catch (DateTimeParseException e) {
+                throw new PrimeException("!! : Invalid date format. Please use YYYY-MM-DD.");
+            }
+            return;
+
+        default:
+            throw new PrimeException("!! : Invalid field for Event type");
+        }
     }
 }
