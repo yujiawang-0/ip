@@ -14,6 +14,8 @@ public class Log {
 
     public void add(ToDo task) {
         log.add(task);
+
+        assert log.size() > 0 : "Log should not be empty after adding a task";
     }
 
     /**
