@@ -7,6 +7,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+
+import java.util.ArrayList;
+
 import javafx.animation.PauseTransition;
 import javafx.util.Duration;
 
@@ -30,9 +33,29 @@ public class MainWindow extends AnchorPane {
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/spike_the_human.jpg"));
     private Image oppyImage = new Image(this.getClass().getResourceAsStream("/images/Optimus.jpg"));
 
+    // stores all previous user inputs
+    private final ArrayList<String> commandHistory = new ArrayList<>();
+    // track the current position when navigating
+    private int historyPointer = -1;
+
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        userInput.setOnKeyPressed(event -> {
+            switch (event.getCode()) {
+
+                case UP:
+                    navigateHistoryUp();
+                    break;
+
+                case DOWN:
+                    navigateHistoryDown();
+                    break;
+
+                default:
+                    break;
+            }
+        });
     }
 
     /** Injects the Duke instance */
@@ -52,7 +75,13 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     private void handleUserInput() {
-        String input = userInput.getText();
+        String input = userInput.getText().trim();
+
+        if (!input.isEmpty()) {
+            commandHistory.add(input);
+            historyPointer = commandHistory.size(); // reset pointer
+        }
+
         String response = prime.getResponse(input);
 
         if (response.equals("__EXIT__")) {
@@ -76,5 +105,33 @@ public class MainWindow extends AnchorPane {
                 DialogBox.getUserDialog(input, userImage),
                 DialogBox.getPrimeDialog(response, oppyImage));
         userInput.clear();
+    }
+
+    private void navigateHistoryUp() {
+
+        if (commandHistory.isEmpty()) {
+            return;
+        }
+
+        if (historyPointer > 0) {
+            historyPointer--;
+            userInput.setText(commandHistory.get(historyPointer));
+            userInput.positionCaret(userInput.getText().length());
+        }
+    }
+
+    private void navigateHistoryDown() {
+
+        if (commandHistory.isEmpty()) {
+            return;
+        }
+
+        if (historyPointer < commandHistory.size() - 1) {
+            historyPointer++;
+            userInput.setText(commandHistory.get(historyPointer));
+        } else {
+            historyPointer = commandHistory.size();
+            userInput.clear(); // back to empty input state
+        }
     }
 }
