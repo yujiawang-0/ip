@@ -2,6 +2,7 @@ package prime.parser;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 
 import prime.core.PrimeException;
 import prime.task.Deadline;
@@ -15,6 +16,10 @@ import prime.ui.Ui;
  * Parses user input and executes the corresponding command on the log
  */
 public class PrimeParser {
+
+    private static void showTaskCount(Log log) {
+        Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
+    }
 
     /**
      * Marks a ToDo as done
@@ -89,8 +94,8 @@ public class PrimeParser {
         log.add(todo);
 
         Ui.buildMessage("Understood. I have added to the log:",
-                "    " + todo.printTask(),
-                "You have " + log.size() + " tasks. Let's keep at it!");
+                "    " + todo.printTask());
+        showTaskCount(log);
     }
 
     /**
@@ -125,11 +130,11 @@ public class PrimeParser {
             Ui.buildMessage("Understood. I have added to the log:",
                     "    " + deadline.printTask());
 
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
 
-        Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
+        showTaskCount(log);
     }
 
 
@@ -174,11 +179,11 @@ public class PrimeParser {
 
             Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
 
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
 
-        Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
+        showTaskCount(log);
 
     }
 
@@ -207,7 +212,7 @@ public class PrimeParser {
             throw new PrimeException("!! : Task number should be a number.");
         }
 
-        Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
+        showTaskCount(log);
 
     }
 
@@ -217,8 +222,8 @@ public class PrimeParser {
      */
     public static void list(Log log) {
         // prints out list of current tasks
-        Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!",
-                "Here are your tasks currently in my log:" );
+        showTaskCount(log);
+        Ui.buildMessage("Here are your tasks currently in my log:" );
         Ui.printArrayList(log.getAll());
     }
 
@@ -235,7 +240,6 @@ public class PrimeParser {
         ArrayList<NumberedTask> result = log.find(rest);
         Ui.showFindResults(result);
     }
-
 
     /**
      * Parses a user input, executes it, and provides a string to print in the GUI
