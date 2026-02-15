@@ -98,12 +98,32 @@ public class PrimeParser {
         showTaskCount(log);
     }
 
+    // helper for addDeadline : handles parsing logic
+    private static Deadline parseDeadline(String rest) throws PrimeException {
+        String[] split = rest.split("/by ", 2);
+
+        if (split.length != 2) {
+            throw new PrimeException(
+                    "!! : Please provide me the task description and due date in YYYY-MM-DD.");
+        }
+
+        String description = split[0].trim();
+        String dateString = split[1].trim();
+
+        try {
+            LocalDate dueDate = LocalDate.parse(dateString);
+            return new Deadline(false, description, dueDate);
+
+        } catch (DateTimeParseException e) {
+            throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
+        }
+    }
+
     /**
      * Adds a Deadline to log and prints what has been added
      *
-     * @param item    the deadline description
-     * @param dueDate the due date of the deadline
-     * @param log     the log to operate on
+     * @param rest  the rest of the instructions
+     * @param log  the log to operate on
      * @throws PrimeException when the date inputted is in the wrong format
      */
     public static void addDeadline(String rest, Log log) throws PrimeException {
@@ -112,39 +132,46 @@ public class PrimeParser {
             throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
         }
 
-        String[] dueStrings = rest.split("/by ", 2);
-        if (dueStrings.length != 2) {
-            throw new PrimeException("!! : Please provide me with the task description"
-                    + " and the due date in YYYY-MM-DD.");
+       Deadline deadline = parseDeadline(rest);
+       log.add(deadline);
+
+
+        Ui.buildMessage("Understood. I have added to the log:",
+                "    " + deadline.printTask());
+        showTaskCount(log);
+    }
+
+    // helper for addEvent: handles parsing logic
+    private static Event parseEvent(String rest) throws PrimeException {
+        String[] descriptionSplit = rest.split("/from ", 2);
+
+        if (descriptionSplit.length != 2) {
+            throw new PrimeException("!! : Please provide task description, start and end times.");
         }
 
-        String item = dueStrings[0];
-        String dueDate = dueStrings[1];
+        String description = descriptionSplit[0].trim();
+
+        String[] dateSplit = descriptionSplit[1].split("/to ", 2);
+        if (dateSplit.length != 2) {
+            throw new PrimeException("!! : Start and end times must follow /from and /to format.");
+        }
 
         try {
-            LocalDate by = LocalDate.parse(dueDate.trim());
-            Deadline deadline = new Deadline(false, item, by);
+            LocalDate startDate = LocalDate.parse(dateSplit[0].trim());
+            LocalDate endDate = LocalDate.parse(dateSplit[1].trim());
 
-            log.add(deadline);
-
-            Ui.buildMessage("Understood. I have added to the log:",
-                    "    " + deadline.printTask());
+            return new Event(false, description, startDate, endDate);
 
         } catch (DateTimeParseException e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
-
-        showTaskCount(log);
     }
-
 
     /**
      * Adds Event to log and prints what has been added
      *
-     * @param item  the event description
-     * @param start the start date of the deadline
-     * @param end   the end date of the deadline
-     * @param log   the log to operate on
+     * @param rest the rest of the instructions
+     * @param log  the log to operate on
      * @throws PrimeException when the date inputted is in the wrong format
      */
     public static void addEvent(String rest, Log log) throws PrimeException {
@@ -153,38 +180,12 @@ public class PrimeParser {
             throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
         }
 
-        String[] timingsArray = rest.split("/from ", 2);
-        if (timingsArray.length != 2) {
-            throw new PrimeException("!! : Please provide me with the task description, "
-                    + "start and end times.");
-        }
+        Event event = parseEvent(rest);
 
-        String timings = timingsArray[1];
-        String[] dates = timings.split("/to ", 2);
-        if(dates.length != 2) {
-            throw new PrimeException("!! : Are you missing the start or end times?"
-                    + " They must be in the correct order.");
-        }
-
-        String item = timingsArray[0].trim();
-        String start = dates[0];
-        String end = dates[1];
-
-        try {
-            LocalDate from = LocalDate.parse(start.trim());
-            LocalDate to = LocalDate.parse(end.trim());
-
-            Event event = new Event(false, item, from, to);
-            log.add(event);
-
-            Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
-
-        } catch (DateTimeParseException e) {
-            throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
-        }
-
+        Ui.buildMessage("Understood. I have added to the log:", "    " + event.printTask());
         showTaskCount(log);
 
+        assert log.size() > 0 : "Log should contain at least one task after adding event";
     }
 
     /**
@@ -213,7 +214,6 @@ public class PrimeParser {
         }
 
         showTaskCount(log);
-
     }
 
     /**
@@ -229,8 +229,9 @@ public class PrimeParser {
 
     /**
      * Finds all the tasks matching the keyword
-     * @param rest  the keyword
-     * @param log
+     *
+     * @param rest the keyword
+     * @param log  the log to operate on
      * @throws PrimeException
      */
     public static void find(String rest, Log log) throws PrimeException {
