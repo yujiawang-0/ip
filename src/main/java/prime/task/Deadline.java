@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class Deadline extends ToDo {
     /** Type identifier used when saving this task to storage and for Ui. */
-    private String type = "D";
+    private final static String TYPE = "D";
 
     /** The due date of the deadline. */
     private LocalDate due;
@@ -19,9 +19,9 @@ public class Deadline extends ToDo {
     /**
      * Creates a deadline task with a due date.
      *
-     * @param isDone    Whether the task is marked as completed
-     * @param Task  The task description
-     * @param due   The due date of the task
+     * @param isDone Whether the task is marked as completed
+     * @param Task   The task description
+     * @param due    The due date of the task
      */
     public Deadline(boolean isDone, String task, LocalDate due) {
         super(isDone, task);
@@ -39,7 +39,7 @@ public class Deadline extends ToDo {
     /**
      * Returns the due date formatted for display to the user.
      *
-     * @return  The formatted due date string
+     * @return The formatted due date string
      */
     private String getDueString() {
         return this.getDue().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
@@ -48,23 +48,23 @@ public class Deadline extends ToDo {
     /**
      * Returns a user-friendly string representation of this deadline.
      *
-     * @return  A formatted string showing the task status, description, and due date
+     * @return A formatted string showing the task status, description, and due date
      */
     @Override
     public String printTask() {
-        String symbol = this.getDone() ? "X" : " ";
-        return "[" + type + "]" + "[" + symbol + "] " + getTask() + " (By: " + getDueString() + ")";
+        String symbol = this.isDone() ? "X" : " ";
+        return "[" + TYPE + "]" + "[" + symbol + "] " + getTask() + " (By: " + getDueString() + ")";
 
     }
 
     /**
      * Converts this deadline into a string format suitable for file storage.
      *
-     * @return  A formatted string representing this deadline for saving to file
+     * @return A formatted string representing this deadline for saving to file
      */
     @Override
     public String toFileString() {
-        String symbol = this.getDone() ? "1" : "0";
-        return type + " | " + symbol + " | " + getTask() + " | " + getDue();
+        String symbol = this.isDone() ? "1" : "0";
+        return TYPE + " | " + symbol + " | " + getTask() + " | " + getDue();
     }
 }

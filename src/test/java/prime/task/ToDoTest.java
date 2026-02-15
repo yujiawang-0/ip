@@ -10,7 +10,7 @@ public class ToDoTest {
     public void setDone_markTaskAsDone() {
         ToDo todo = new ToDo(false, "something");
         todo.setDone(true);
-        assertSame(todo.getDone(), true);
+        assertSame(todo.isDone(), true);
     }
 
     @Test

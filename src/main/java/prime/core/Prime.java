@@ -8,13 +8,15 @@ import prime.ui.Ui;
 
 /**
  * Main class / entry point for the program
- * Starts the scanner for user input
- * initalises log and storage to be used by the rest of the program
+ * Initalises log and storage to be used by the rest of the program
  */
 public class Prime {
     private static final Log log = new Log();
     private static Storage storage;
 
+    /**
+     * Constructor to create a Prime object
+     */
     public Prime() {
         try {
             storage = new Storage();
@@ -33,7 +35,7 @@ public class Prime {
     }
 
     /**
-     * Processes user input and returns the response as a String.
+     * Processes user input and returns the response as a String for the GUI to output
      */
     public String getResponse(String input) {
         try {
@@ -56,51 +58,13 @@ public class Prime {
         }
     }
 
+    /**
+     * Sends the text needed for greeting in the GUI
+     * @return Prime's greeting string
+     */
     public String getGreeting() {
         Ui.buildMessage("I AM OPTIMUS PRIME.\nHello, little one.");
         return Ui.getResponse();
     }
 
-
-    // public static void main(String[] args) {
-    //     try {
-    //         storage = new Storage();
-
-    //         // Load saved tasks
-    //         for (ToDo task : storage.loadData()) {
-    //             log.add(task);
-    //         }
-
-    //         Ui.showHello();
-    //         // Ui.showPrime();
-
-    //         Scanner s = new Scanner(System.in);
-    //         boolean isRunning = true;
-
-    //         while (isRunning) {
-    //             try {
-    //                 Ui.buildMessage("Please, give me an instruction: ");
-    //                 String input = s.nextLine().trim();
-    //                 Ui.showLine();
-
-    //                 isRunning = PrimeParser.parse(input, log);
-
-    //                 // save the data after every command by the user
-    //                 storage.saveData(log.getAll());
-
-    //                 Ui.showLine();
-
-    //             } catch (PrimeException e) {
-    //                 Ui.buildError(e.getMessage());
-    //                 Ui.showLine();
-    //             }
-    //         }
-
-    //         s.close();
-
-    //     } catch (Exception e) {
-    //         Ui.buildError(e.getMessage());
-    //     }
-
-    // }
 }

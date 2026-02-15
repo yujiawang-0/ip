@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
  * An {@code Event} is a type of {@link ToDo} that occurs over a period of time
  */
 public class Event extends ToDo {
-    private String type = "E";
+    private final static String TYPE = "E";
     private LocalDate startTime;
     private LocalDate endTime;
 
@@ -17,7 +17,7 @@ public class Event extends ToDo {
      * Constructs an Event task.
      *
      * @param isDone    Whether the event is marked as completed.
-     * @param Task  The description of the event.
+     * @param Task      The description of the event.
      * @param startTime The start date of the event.
      * @param endTime   The start date of the event.
      */
@@ -58,8 +58,8 @@ public class Event extends ToDo {
      */
     @Override
     public String printTask() {
-        String symbol = this.getDone() ? "X" : " ";
-        return "[" + type + "]" + "[" + symbol + "] " + getTask() + " (From: "
+        String symbol = this.isDone() ? "X" : " ";
+        return "[" + TYPE + "]" + "[" + symbol + "] " + getTask() + " (From: "
                 + getStartString() + " To: " + getEndString() + ")";
     }
 
@@ -70,8 +70,8 @@ public class Event extends ToDo {
      */
     @Override
     public String toFileString() {
-        String symbol = this.getDone() ? "1" : "0";
-        return type + " | " + symbol + " | " + getTask() + " | "
+        String symbol = this.isDone() ? "1" : "0";
+        return TYPE + " | " + symbol + " | " + getTask() + " | "
                 + getStart() + " | " + getEnd();
     }
 }

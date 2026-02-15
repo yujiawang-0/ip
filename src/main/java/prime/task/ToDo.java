@@ -6,7 +6,7 @@ package prime.task;
  * A {@code ToDo} task contains a description and a completion status.
  */
 public class ToDo {
-    private String type = "T";
+    private final static String TYPE = "T";
     private boolean isDone = false;
     private String task;
 
@@ -22,7 +22,7 @@ public class ToDo {
     }
 
     // getter for completion
-    public boolean getDone() {
+    public boolean isDone() {
         return this.isDone;
     }
 
@@ -47,8 +47,8 @@ public class ToDo {
      * @return The formatted task string for display.
      */
     public String printTask() {
-        String symbol = this.getDone() ? "X" : " ";
-        return "[" + type + "]" + "[" + symbol + "] " + getTask();
+        String symbol = this.isDone() ? "X" : " ";
+        return "[" + TYPE + "]" + "[" + symbol + "] " + getTask();
     }
 
     /**
@@ -57,8 +57,8 @@ public class ToDo {
      * @return A formatted string representing this task for saving to file.
      */
     public String toFileString() {
-        String symbol = this.getDone() ? "1" : "0";
-        return type + " | " + symbol + " | " + getTask();
+        String symbol = this.isDone() ? "1" : "0";
+        return TYPE + " | " + symbol + " | " + getTask();
     }
 
 }
