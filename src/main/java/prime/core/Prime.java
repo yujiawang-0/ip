@@ -16,8 +16,6 @@ public class Prime {
     private static Storage storage;
 
     public Prime() {
-        // log = new Log();
-
         try {
             storage = new Storage();
 
@@ -25,9 +23,8 @@ public class Prime {
                 log.add(task);
             }
 
-            Ui.buildMessage("I AM OPTIMUS PRIME.\nHello, little one.");
-
-            Ui.getResponse();
+            assert log != null : "Log should be initialised";
+            assert storage != null : "Storage should be initialised";
 
         } catch (Exception e) {
             // If loading fails, GUI will show error on first command
