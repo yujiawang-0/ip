@@ -14,7 +14,7 @@ import prime.core.PrimeException;
  */
 public class Deadline extends ToDo {
     /** Type identifier used when saving this task to storage and for Ui. */
-    private final static String TYPE = "D";
+    private static final String TYPE = "D";
 
     /** The due date of the deadline. */
     private LocalDate due;
@@ -80,7 +80,7 @@ public class Deadline extends ToDo {
         case "desc":
             super.updateField(field, newValue);
             break;
-            
+
         case "by":
             try {
                 setDue(LocalDate.parse(newValue));

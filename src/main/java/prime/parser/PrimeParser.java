@@ -1,8 +1,8 @@
 package prime.parser;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 import prime.core.PrimeException;
 import prime.task.Deadline;
@@ -132,8 +132,8 @@ public class PrimeParser {
             throw new PrimeException("!! : I am sorry, but this instruction is incomplete.");
         }
 
-       Deadline deadline = parseDeadline(rest);
-       log.add(deadline);
+        Deadline deadline = parseDeadline(rest);
+        log.add(deadline);
 
 
         Ui.buildMessage("Understood. I have added to the log:",
@@ -252,7 +252,7 @@ public class PrimeParser {
     public static void list(Log log) {
         // prints out list of current tasks
         showTaskCount(log);
-        Ui.buildMessage("Here are your tasks currently in my log:" );
+        Ui.buildMessage("Here are your tasks currently in my log:");
         Ui.printArrayList(log.getAll());
     }
 

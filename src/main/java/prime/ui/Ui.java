@@ -13,9 +13,9 @@ public class Ui {
     private static StringBuilder response = new StringBuilder();
 
     /**
-     * builds message to be passed to the GUI
+     * Builds message to be passed to the GUI
      *
-     * @param message is the message to be printed
+     * @param messages is the message to be printed
      */
     public static void buildMessage(String... messages) {
         for (String message : messages) {

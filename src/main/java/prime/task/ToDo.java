@@ -8,7 +8,7 @@ import prime.core.PrimeException;
  * A {@code ToDo} task contains a description and a completion status.
  */
 public class ToDo {
-    private final static String TYPE = "T";
+    private static final String TYPE = "T";
     private boolean isDone = false;
     private String task;
 

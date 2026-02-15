@@ -12,7 +12,7 @@ import prime.core.PrimeException;
  * An {@code Event} is a type of {@link ToDo} that occurs over a period of time
  */
 public class Event extends ToDo {
-    private final static String TYPE = "E";
+    private static final String TYPE = "E";
     private LocalDate startTime;
     private LocalDate endTime;
 

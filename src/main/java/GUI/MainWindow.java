@@ -1,5 +1,8 @@
-package GUI;
+package gui;
 
+import java.util.ArrayList;
+
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -7,12 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
-
-import java.util.ArrayList;
-
-import javafx.animation.PauseTransition;
 import javafx.util.Duration;
-
 import prime.core.Prime;
 
 /**
@@ -38,22 +36,28 @@ public class MainWindow extends AnchorPane {
     // track the current position when navigating
     private int historyPointer = -1;
 
+    /**
+     * Initialises the MainWindow GUI components
+     *
+     * Binds the scroll pane to automatically scroll to the bottom whenever new dialog boxes are added
+     * Also sets up key event handling for the user input field to support command history navigation using
+     * the UP and DOWN arrow keys
+     */
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
         userInput.setOnKeyPressed(event -> {
             switch (event.getCode()) {
+            case UP:
+                navigateHistoryUp();
+                break;
 
-                case UP:
-                    navigateHistoryUp();
-                    break;
+            case DOWN:
+                navigateHistoryDown();
+                break;
 
-                case DOWN:
-                    navigateHistoryDown();
-                    break;
-
-                default:
-                    break;
+            default:
+                break;
             }
         });
     }
