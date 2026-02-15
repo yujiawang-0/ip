@@ -46,6 +46,10 @@ public class MainWindow extends AnchorPane {
     @FXML
     public void initialize() {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+
+        /**
+         * AI-assisted to implement terminal-like functionality within the GUI
+         */
         userInput.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case UP:
