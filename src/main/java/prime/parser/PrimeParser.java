@@ -216,6 +216,14 @@ public class PrimeParser {
         showTaskCount(log);
     }
 
+    private static void update(String rest, Log log) throws PrimeException {
+        
+    }
+
+    private static void update(String rest, Log log) throws PrimeException {
+        
+    }
+
     /**
      * Lists all the current tasks in the Log
      * @param log
@@ -307,6 +315,10 @@ public class PrimeParser {
         case "event":
             addEvent(rest, log);
             return true;
+
+            case "update":
+
+            case "update":
 
         default:
             throw new PrimeException("!! : I am sorry, I do not recognise this instruction...");
