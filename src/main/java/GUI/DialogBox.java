@@ -37,6 +37,7 @@ public class DialogBox extends HBox {
 
         dialog.setText(text);
         displayPicture.setImage(img);
+
     }
 
     /**
@@ -48,6 +49,8 @@ public class DialogBox extends HBox {
         Collections.reverse(tmp);
         getChildren().setAll(tmp);
         setAlignment(Pos.TOP_LEFT);
+        dialog.getStyleClass().add("reply-label");
+
     }
 
     public static DialogBox getUserDialog(String text, Image img) {
@@ -59,4 +62,5 @@ public class DialogBox extends HBox {
         db.flip();
         return db;
     }
+
 }
