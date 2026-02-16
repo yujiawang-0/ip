@@ -3,6 +3,7 @@ package gui;
 import java.util.ArrayList;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
@@ -45,11 +46,15 @@ public class MainWindow extends AnchorPane {
      */
     @FXML
     public void initialize() {
-        scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
+        //scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
 
-        /**
-         * AI-assisted to implement terminal-like functionality within the GUI
-         */
+        // Auto-scroll to bottom when content height changes
+        dialogContainer.heightProperty().addListener((obs, oldVal, newVal) -> {
+            scrollPane.setVvalue(1.0);
+        });
+
+
+        // AI-assisted to implement terminal-like functionality within the GUI
         userInput.setOnKeyPressed(event -> {
             switch (event.getCode()) {
             case UP:
@@ -93,7 +98,8 @@ public class MainWindow extends AnchorPane {
         String response = prime.getResponse(input);
 
         if (response.equals("__EXIT__")) {
-            dialogContainer.getChildren().add(
+            dialogContainer.getChildren().addAll(
+                    DialogBox.getUserDialog(input, userImage),
                     DialogBox.getPrimeDialog("Goodbye, little one", oppyImage)
             );
             userInput.clear();
@@ -103,7 +109,7 @@ public class MainWindow extends AnchorPane {
             // Create 2 second delay
             PauseTransition pause = new PauseTransition(Duration.seconds(2));
 
-            pause.setOnFinished(event -> javafx.application.Platform.exit());
+            pause.setOnFinished(event -> Platform.exit());
 
             pause.play();
 

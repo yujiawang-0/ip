@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import prime.core.PrimeException;
 
 public class EventTest {
-@Test
+    @Test
     void constructor_validRange_createsEventSuccessfully() throws Exception {
         LocalDate start = LocalDate.of(2025, 1, 1);
         LocalDate end = LocalDate.of(2025, 1, 5);

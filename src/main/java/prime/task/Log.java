@@ -71,7 +71,7 @@ public class Log {
         if (keyword == null || keyword.trim().isEmpty()) {
             return results;
         }
-        
+
         String lowercase = keyword.toLowerCase();
 
         for (int i = 0; i < log.size(); i++) {

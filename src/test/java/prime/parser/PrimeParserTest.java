@@ -1,8 +1,10 @@
 package prime.parser;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,7 +64,7 @@ public class PrimeParserTest {
     }
 
     @Test
-    void parse_todo_missingDescription_throwsException() {
+    void parse_todoMissingDescription_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("todo   ", log);
         });
@@ -77,21 +79,21 @@ public class PrimeParserTest {
 
     // DEADLINE COMMAND
     @Test
-    void parse_deadline_valid_addsDeadline() throws PrimeException {
+    void parse_validDeadline_addsDeadline() throws PrimeException {
         PrimeParser.parse("deadline Submit report /by 2026-02-28", log);
         assertEquals(1, log.size());
         assertTrue(log.get(0) instanceof Deadline);
     }
 
     @Test
-    void parse_deadline_invalidDate_throwsException() {
+    void parse_deadlineInvalidDate_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("deadline Submit report /by 2026-02-30", log);
         });
     }
 
     @Test
-    void parse_deadline_missingByKeyword_throwsException() {
+    void parse_deadlineMissingByKeyword_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("deadline Submit report 2026-02-28", log);
         });
@@ -100,21 +102,21 @@ public class PrimeParserTest {
 
     // EVENT COMMAND
     @Test
-    void parse_event_valid_addsEvent() throws PrimeException {
+    void parse_validEvent_addsEvent() throws PrimeException {
         PrimeParser.parse("event Conference /from 2026-02-28 /to 2026-03-01", log);
         assertEquals(1, log.size());
         assertTrue(log.get(0) instanceof Event);
     }
 
     @Test
-    void parse_event_invalidDate_throwsException() {
+    void parse_eventInvalidDate_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("event Conference /from 2026-02-30 /to 2026-03-01", log);
         });
     }
 
     @Test
-    void parse_event_startAfterEnd_throwsException() {
+    void parse_eventStartAfterEnd_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("event Conference /from 2026-03-02 /to 2026-03-01", log);
         });
@@ -137,7 +139,7 @@ public class PrimeParserTest {
     }
 
     @Test
-    void parse_mark_invalidIndex_throwsException() {
+    void parse_markInvalidIndex_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("mark 1", log);
         });
@@ -153,7 +155,7 @@ public class PrimeParserTest {
     }
 
     @Test
-    void parse_delete_invalidIndex_throwsException() {
+    void parse_deleteInvalidIndex_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("delete 1", log);
         });
@@ -162,21 +164,21 @@ public class PrimeParserTest {
 
     // UPDATE
     @Test
-    void parse_update_description_updatesTask() throws PrimeException {
+    void parse_updateDescription_updatesTask() throws PrimeException {
         log.add(new ToDo(false, "Old Task"));
         PrimeParser.parse("update 1 desc New Task", log);
         assertEquals("New Task", log.get(0).getTask());
     }
 
     @Test
-    void parse_update_invalidIndex_throwsException() {
+    void parse_updateInvalidIndex_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("update 1 desc New Task", log);
         });
     }
 
     @Test
-    void parse_update_invalidUsage_throwsException() {
+    void parse_updateInvalidUsage_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("update 1 desc", log);
         });
@@ -185,7 +187,7 @@ public class PrimeParserTest {
 
     // FIND
     @Test
-    void parse_find_doesNotThrow_whenKeywordExists() throws PrimeException {
+    void find_doesNotThrow_whenKeywordExists() throws PrimeException {
         log.add(new ToDo(false, "Read book"));
 
         assertDoesNotThrow(() -> {
@@ -194,7 +196,7 @@ public class PrimeParserTest {
     }
 
     @Test
-    void parse_find_missingKeyword_throwsException() {
+    void find_missingKeyword_throwsException() {
         assertThrows(PrimeException.class, () -> {
             PrimeParser.parse("find   ", log);
         });

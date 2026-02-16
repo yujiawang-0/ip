@@ -114,6 +114,8 @@ public class PrimeParser {
             LocalDate dueDate = LocalDate.parse(dateString);
             return new Deadline(false, description, dueDate);
 
+        } catch (IllegalArgumentException e) {
+            throw new PrimeException(e.getMessage());
         } catch (DateTimeParseException e) {
             throw new PrimeException("I cannot understand the date format. Please use YYYY-MM-DD.");
         }
