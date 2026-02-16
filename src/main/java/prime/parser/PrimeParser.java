@@ -343,6 +343,7 @@ public class PrimeParser {
             return true;
 
         case "update":
+        case "edit":
             update(rest, log);
             return true;
 
