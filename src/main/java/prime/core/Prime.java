@@ -11,22 +11,31 @@ import prime.ui.Ui;
  * Initalises log and storage to be used by the rest of the program
  */
 public class Prime {
-    private static final Log log = new Log();
-    private static Storage storage;
+    private final Log log;
+    private final Storage storage;
 
     /**
      * Constructor to create a Prime object
      */
     public Prime() {
+        log = new Log();
         try {
             storage = new Storage();
+        } catch (PrimeException e) {
+            // should not ever have to hit here but just in case
+            Ui.buildError("Unable to initialise storage:\n" + e.getMessage()
+                    + "\nPlease relaunch PRIME using:\njava -jar PRIME.jar");
+            javafx.application.Platform.exit(); // for GUI to close
+            throw new RuntimeException("Storage initialisation failed.", e);
+        }
 
+        assert log != null : "Log should be initialised";
+        assert storage != null : "Storage should be initialised";
+
+        try {
             for (ToDo task : storage.loadData()) {
                 log.add(task);
             }
-
-            assert log != null : "Log should be initialised";
-            assert storage != null : "Storage should be initialised";
 
         } catch (Exception e) {
             // If loading fails, GUI will show error on first command
