@@ -56,10 +56,18 @@ public class Event extends ToDo {
         return this.endTime;
     }
 
+    /**
+     * Set the start date of the event
+     * @param start start date
+     */
     public void setStart(LocalDate start) {
         this.startTime = start;
     }
 
+    /**
+     * Set the end date of the event
+     * @param end end date
+     */
     public void setEnd(LocalDate end) {
         this.endTime = end;
     }
