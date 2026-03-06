@@ -72,10 +72,18 @@ public class Event extends ToDo {
         this.endTime = end;
     }
 
+    /**
+     * Get the start date as a string
+     * @return start date as a string
+     */
     private String getStartString() {
         return this.getStart().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
 
+    /**
+     * Get the end date as a string
+     * @return end date as a string
+     */
     private String getEndString() {
         return this.getEnd().format(DateTimeFormatter.ofPattern("MMM d yyyy"));
     }
