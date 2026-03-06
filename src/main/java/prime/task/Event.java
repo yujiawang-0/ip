@@ -40,10 +40,18 @@ public class Event extends ToDo {
         setEnd(endTime);
     }
 
+    /**
+     * Get the start date of the event
+     * @return start date
+     */
     public LocalDate getStart() {
         return this.startTime;
     }
 
+    /**
+     * Get the end date of the event
+     * @return end date
+     */
     public LocalDate getEnd() {
         return this.endTime;
     }
