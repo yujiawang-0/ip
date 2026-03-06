@@ -17,6 +17,10 @@ import prime.ui.Ui;
  */
 public class PrimeParser {
 
+    /**
+     * Show the number of tasks in the log
+     * @param log 
+     */
     private static void showTaskCount(Log log) {
         Ui.buildMessage("You have " + log.size() + " tasks. Let's keep at it!");
     }
