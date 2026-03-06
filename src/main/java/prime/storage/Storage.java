@@ -102,6 +102,14 @@ public class Storage {
     // @@author eejon--reused
     // Reused from https://github.com/eejon/ip/tree/master
     // with minor modifications
+    /**
+     * Read input file line by line and outputs a task if the input is valid
+     * Else, skips the line
+     * @param inputFile storage file
+     * @param tasks data structure to append parsed ToDos to
+     * @return
+     * @throws IOException 
+     */
     private ArrayList<ToDo> processFileData(File inputFile, ArrayList<ToDo> tasks) throws IOException {
         FileReader fileIn = new FileReader(inputFile);
         BufferedReader bufferIn = new BufferedReader(fileIn);
